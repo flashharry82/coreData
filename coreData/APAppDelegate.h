@@ -14,12 +14,11 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) APViewController *viewController;
-@property (readonly, strong, nonatomic) NSManagedObjectContext * managedObjectContext;
+@property (strong, nonatomic) APViewController *viewController; //default view controller for application
+@property (readonly, strong, nonatomic) NSManagedObjectContext * managedObjectContext; //
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator * persistentStoreCoordinator;
-
-- (NSURL *)applicationDocumentsDirectory;
+@property (strong, nonatomic) NSURL * applicationDocumentsDirectory;
 
 
 @end

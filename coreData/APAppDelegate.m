@@ -16,6 +16,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize applicationDocumentsDirectory = _applicationDocumentsDirectory;
 
 
 
@@ -57,37 +58,47 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-            
+
+// overrides getter for managedObjectContext
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext
 {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    else{
+    if (_managedObjectContext == nil) {
         NSPersistentStoreCoordinator * coordinator = [self persistentStoreCoordinator];
         if (coordinator != nil) {
-            _managedObjectContext = [NSManagedObjectContext new];
+            _managedObjectContext = [NSManagedObjectContext new]; //new is same as calling "alloc] init]"
             _managedObjectContext.persistentStoreCoordinator = coordinator;
         }
     }
     return _managedObjectContext;
 }
 
+// overrides getter for managedObjectModel
+// Returns the managed object model for the application.
+// If the model doesn't already exist, it is created from the application's model.
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if(_managedObjectModel == nil){
+        NSURL * modelURL = [[NSBundle mainBundle] URLForResource:@"data" withExtension:@"momd"];
+        _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    }
+    return _managedObjectModel;
+}
+
+// overrides getter for persistentStoreCoordinator
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    else {
+    if (_persistentStoreCoordinator == nil) {
         //get the database file
         NSURL * dbURL = [self.applicationDocumentsDirectory URLByAppendingPathComponent:@"data.sqlite"];
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-        
+
         NSError *error = nil;
+        
+        //adds a persistant store to the documents folder(dbURL) of the type NSSQLiteStoreType with no configuration or options
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:dbURL options:nil error:&error]){
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
@@ -96,8 +107,12 @@
     return _persistentStoreCoordinator;
 }
 
-- (NSURL *)applicationDocumentsDirectory{
-    return [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
+
+
+//override getter for applicationDocumentsDirectory
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject; //get the documents directory on the iOS device
 }
 
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface APViewController : UIViewController
+@interface APViewController : UIViewController <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController * resultsController;
+@property (strong, nonatomic) NSManagedObjectContext * managedObjectContext;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 @end
