@@ -22,60 +22,16 @@
 @synthesize contentLabel = _contentLabel;
 
 
--(void) testData{
-    NSLog(@"%d", [self.resultsController.fetchedObjects count]);
-    
-    if([self.resultsController.fetchedObjects count] < 1){
-        
-        NSEntityDescription * entity = [[self.resultsController fetchRequest] entity];
-        
-        NSLog(@"CREATING TEST CONTENT");
-        
-        Content * newContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
-        
-        newContent.body = @"Test Content";
-        
-        NSError * error;
-        if(![self.managedObjectContext save:&error]){
-            NSLog(@"Error - %@, %@", error, [error userInfo]);
-        }
-        else{
-            NSLog(@"%@", newContent.body);
-        }
-    }
-}
 
 - (void)viewDidLoad
 {
     //get managed object context from APAppDelegate
     self.managedObjectContext = ((APAppDelegate *)UIApplication.sharedApplication.delegate).managedObjectContext;
-    
-    [self testData];
-    
-   /* 
-    // this section is just to make sure the results controller always has something in it
-    if(self.resultsController.fetchedObjects.count < 1){
-        
-        NSEntityDescription * entity = self.resultsController.fetchRequest.entity;
-        
-        Content * newContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
-        
-        newContent.body = @"Test Content";
-        
-        NSError * error;
-        if(![self.managedObjectContext save:&error]){
-            NSLog(@"Error - %@, %@", error, [error userInfo]);
-        }
-        else{
-            NSLog(@"%@", newContent.body);
-        }
-    }
-    
-    */
-    
-    NSLog(@"%@", [self.resultsController.fetchedObjects lastObject]);
+
     // set the contents of the label to the body of the object from the resultsController at index 0 (the first object)
-    self.contentLabel.text = ((Content *)[self.resultsController objectAtIndexPath:0]).body; 
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    self.contentLabel.text = ((Content *)[self.resultsController objectAtIndexPath:indexPath]).body;
     
     [super viewDidLoad];
 }
@@ -118,6 +74,29 @@
         }
         
     }
+    
+    
+    // this section is just to populate the the results controller if it is empty
+    if([_resultsController.fetchedObjects count] < 1){
+        
+        NSEntityDescription * entity = [[_resultsController fetchRequest] entity];
+        
+        Content * newContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:self.managedObjectContext];
+        
+        newContent.body = @"Test Content";
+        
+        NSError * error;
+        if(![self.managedObjectContext save:&error]){
+            NSLog(@"Error - %@, %@", error, [error userInfo]);
+        }
+        
+        // perform fetch and catch errors
+        if(![_resultsController performFetch:&error]){
+            NSLog(@"Error - %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+    //---------------------------------------------------------------------------
     
 
     return _resultsController;
