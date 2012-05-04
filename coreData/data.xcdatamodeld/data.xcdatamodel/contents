@@ -3,7 +3,14 @@
     <entity name="Content" representedClassName="Content" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Person" representedClassName="Person" syncable="YES">
+        <attribute name="date_of_birth" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Content" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="Person" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

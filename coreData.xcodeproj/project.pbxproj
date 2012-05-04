@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E79B12081553D00A004DCD96 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = E79B12071553D00A004DCD96 /* Person.m */; };
 		E7AC5CB0154AEC2800AB0292 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AC5CAF154AEC2800AB0292 /* UIKit.framework */; };
 		E7AC5CB2154AEC2800AB0292 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AC5CB1154AEC2800AB0292 /* Foundation.framework */; };
 		E7AC5CB4154AEC2800AB0292 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7AC5CB3154AEC2800AB0292 /* CoreGraphics.framework */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E79B12061553D00A004DCD96 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		E79B12071553D00A004DCD96 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		E7AC5CAB154AEC2800AB0292 /* coreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7AC5CAF154AEC2800AB0292 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E7AC5CB1154AEC2800AB0292 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,6 +58,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E79B120A1553D015004DCD96 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E7AC5CD8154B089200AB0292 /* Content.h */,
+				E7AC5CD9154B089200AB0292 /* Content.m */,
+				E79B12061553D00A004DCD96 /* Person.h */,
+				E79B12071553D00A004DCD96 /* Person.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		E79B120B1553D023004DCD96 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E7AC5CC4154AEC2900AB0292 /* APViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E79B120C1553D033004DCD96 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E7AC5CC1154AEC2900AB0292 /* APViewController.h */,
+				E7AC5CC2154AEC2900AB0292 /* APViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		E7AC5CA0154AEC2800AB0292 = {
 			isa = PBXGroup;
 			children = (
@@ -86,15 +117,13 @@
 		E7AC5CB5154AEC2800AB0292 /* coreData */ = {
 			isa = PBXGroup;
 			children = (
+				E79B120C1553D033004DCD96 /* Controllers */,
+				E79B120B1553D023004DCD96 /* Views */,
+				E79B120A1553D015004DCD96 /* Models */,
 				E7AC5CBE154AEC2800AB0292 /* APAppDelegate.h */,
 				E7AC5CBF154AEC2800AB0292 /* APAppDelegate.m */,
-				E7AC5CC1154AEC2900AB0292 /* APViewController.h */,
-				E7AC5CC2154AEC2900AB0292 /* APViewController.m */,
-				E7AC5CC4154AEC2900AB0292 /* APViewController.xib */,
 				E7AC5CB6154AEC2800AB0292 /* Supporting Files */,
 				E7AC5CD5154AF46100AB0292 /* data.xcdatamodeld */,
-				E7AC5CD8154B089200AB0292 /* Content.h */,
-				E7AC5CD9154B089200AB0292 /* Content.m */,
 			);
 			path = coreData;
 			sourceTree = "<group>";
@@ -178,6 +207,7 @@
 				E7AC5CC3154AEC2900AB0292 /* APViewController.m in Sources */,
 				E7AC5CD7154AF46100AB0292 /* data.xcdatamodeld in Sources */,
 				E7AC5CDA154B089200AB0292 /* Content.m in Sources */,
+				E79B12081553D00A004DCD96 /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +319,7 @@
 				E7AC5CCB154AEC2900AB0292 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
