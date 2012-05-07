@@ -27,9 +27,8 @@
 
 -(void) getFeed
 {
-    //NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://feed.astirling.com/feed.json"]];
     NSError * e = nil;
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://feed.astirling.com/feed.json"]];
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://feeds.astirling.com/people.json"]];
     NSDictionary * feed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error: &e];
     
     if(!feed){
@@ -42,7 +41,18 @@
             newPerson.first_name = [entry valueForKey:@"first_name"];
             newPerson.last_name = [entry valueForKey:@"last_name"];
             newPerson.email = [entry valueForKey:@"email"];
-            newPerson.date_of_birth = (NSDate *)[entry valueForKey:@"date_of_birth"];
+            NSDateFormatter * df = [NSDateFormatter new];
+            df.TimeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+            df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+            newPerson.date_of_birth = [df dateFromString:[entry valueForKey:@"date_of_birth"]];
+            
+
+            if(![self.managedObjectContext save:&e]){
+                NSLog(@"Error - %@, %@", e, [e userInfo]);
+            }else {
+                NSLog(@"Person - %@", newPerson);
+            }
+
         }
     }
 }
@@ -52,13 +62,19 @@
     //get managed object context from APAppDelegate
     self.managedObjectContext = ((APAppDelegate *)UIApplication.sharedApplication.delegate).managedObjectContext;
     
-
-    // set the contents of the label to the body of the object from the resultsController at index 0 (the first object)
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self getFeed];
     
-    self.contentLabel.text = ((Content *)[self.resultsController objectAtIndexPath:indexPath]).body;
+    if(self.resultsController.sections.count > 0 && [[self.resultsController.sections objectAtIndex:0] numberOfObjects] > 0){
+        
+        NSLog(@"%d", self.resultsController.sections.count);
     
-    [super viewDidLoad];
+        // set the contents of the label to the body of the object from the resultsController at index 0 (the first object)
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        self.contentLabel.text = ((Person *)[self.resultsController objectAtIndexPath:indexPath]).details;
+        
+        [super viewDidLoad];
+    }
 }
 
 - (void)viewDidUnload
@@ -77,11 +93,11 @@
     if(_resultsController == nil)
     {
         NSFetchRequest * request = [NSFetchRequest new]; // fetch request, new same as "alloc] init]"
-        NSEntityDescription * entity = [NSEntityDescription entityForName:@"Content" inManagedObjectContext:self.managedObjectContext];
+        NSEntityDescription * entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
         
         request.entity = entity; // set entity to get
         
-        NSSortDescriptor * sort = [[NSSortDescriptor alloc] initWithKey:@"body" ascending:FALSE]; // sort description
+        NSSortDescriptor * sort = [[NSSortDescriptor alloc] initWithKey:@"first_name" ascending:TRUE]; // sort description
         
         [request setSortDescriptors:[NSArray arrayWithObject:sort]]; // set sort for fetch
         
@@ -100,6 +116,7 @@
         
     }
     
+
     /*
     // this section is just to populate the the results controller if it is empty
     if([_resultsController.fetchedObjects count] < 1){

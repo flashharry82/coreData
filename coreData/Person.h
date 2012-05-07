@@ -17,4 +17,6 @@
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSDate * date_of_birth;
 
+- (NSString *) details;
+
 @end

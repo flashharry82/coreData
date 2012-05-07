@@ -16,4 +16,8 @@
 @dynamic email;
 @dynamic date_of_birth;
 
+-(NSString *) details{
+    return [NSString stringWithFormat:@"%@ %@ - %@", self.first_name, self.last_name, self.email];
+}
+
 @end
