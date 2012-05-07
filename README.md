@@ -6,5 +6,5 @@ If you think you can make it simpler, please let me know.
 
 Branches:
 
-master - basic read from coreData memory, creates object on initialisation of results controller.
+master - basic read from coreData memory, creates object on initialisation of results controller.   
 feed - extends basic read to create objects pulled in from JSON feed done in viewDidLoad before results controller is initialised.
