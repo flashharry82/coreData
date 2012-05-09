@@ -23,6 +23,7 @@
 @synthesize resultsController = _resultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize contentLabel = _contentLabel;
+@synthesize peopleList = _peopleList;
 
 
 -(void) getFeed
@@ -80,6 +81,7 @@
 - (void)viewDidUnload
 {
     [self setContentLabel:nil];
+    [self setPeopleList:nil];
     [super viewDidUnload];
     
     self.resultsController = nil; // set results controller to nil
@@ -144,5 +146,32 @@
     return _resultsController;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.resultsController.sections.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.resultsController.sections objectAtIndex:section] numberOfObjects];
+}
+
+//- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+//    Person * newPerson = [self.resultsController objectAtIndexPath:indexPath];
+//    cell.textLabel.text = newPerson.details;
+//}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+
+    cell.textLabel.text = ((Person *)[self.resultsController objectAtIndexPath:indexPath]).details;
+    return cell;
+}
 
 @end

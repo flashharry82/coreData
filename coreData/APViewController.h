@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface APViewController : UIViewController <NSFetchedResultsControllerDelegate>
+@interface APViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) NSFetchedResultsController * resultsController;
 @property (strong, nonatomic) NSManagedObjectContext * managedObjectContext;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (strong, nonatomic) IBOutlet UITableView *peopleList;
 
 @end
